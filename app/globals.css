@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --text-colour: #171717;
+  --second-text: #800020;
+  --accent-colour: #800020;
+  --button-colour: #FAC638;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: var(--background);
+  color: var(--text-colour);
+  font-family: var(--font-sans);
+}
+
+.buttonPrimary {
+  @apply px-6 py-3 rounded-full bg-(--button-colour) text-black font-bold hover:opacity-90 transition-all flex items-center justify-center;
+}
+
+.buttonSecondary {
+  @apply px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all font-semibold flex items-center justify-center;
+}
