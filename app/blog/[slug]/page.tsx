@@ -1,4 +1,4 @@
-import { getPostBySlug, getPaginatedPosts } from "@/lib/posts";
+import { getPostBySlug, getPaginatedPosts, Post } from "@/lib/posts";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
     if (!post) {
         return {
-            title: 'Post Not Found',
+            title: 'Nie znaleziono posta',
         };
     }
 
     return {
-        title: `${post.title} - ZSCL Blog`,
+        title: `${post.title} - Blog ZSCL`,
         description: post.excerpt,
     };
 }
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 // Generate static params for known posts to optimize build
 export async function generateStaticParams() {
     const { posts } = await getPaginatedPosts(1, 100);
-    return posts.map((post) => ({
+    return posts.map((post: Post) => ({
         slug: post.slug,
     }));
 }
@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             href="/blog"
                             className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-4"
                         >
-                            <ArrowLeft size={20} /> Back to News
+                            <ArrowLeft size={20} /> Powrót do Aktualności
                         </Link>
                         <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-lg">
                             {post.title}
@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 <span className="p-2 rounded-full bg-white/20 backdrop-blur-md">
                                     <Clock size={16} />
                                 </span>
-                                5 min read
+                                5 min czytania
                             </div>
                         </div>
                     </div>
@@ -98,24 +98,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                            In a real app, this would be a Markdown renderer. 
                            For now, we just display the text content.
                         */}
-                        {post.content.split('\n').map((paragraph, idx) => (
+                        {post.content.split('\n').map((paragraph: string, idx: number) => (
                             <p key={idx} className="mb-6">{paragraph}</p>
                         ))}
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            Wsparcie społeczności uczniowskiej jest kluczowe dla rozwoju naszej placówki. Dzięki wspólnym wysiłkom Samorządu i Dyrekcji, udaje nam się realizować coraz więcej ambitnych projektów, które realnie wpływają na komfort nauki i atmosferę w szkole.
                         </p>
-                        <h3>Why this matters</h3>
+                        <h3>Dlaczego to jest ważne?</h3>
                         <p>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.
+                            Każda inicjatywa, od drobnych zmian w statucie po duże wydarzenia kulturalne, ma na celu jedno: sprawienie, by każdy uczeń czuł się w ZSCL jak u siebie. Inwestujemy w dialog i otwartość, bo wierzymy, że to podstawa nowoczesnego szkolnictwa.
                         </p>
                     </div>
 
                     <div className="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
                         <div className="text-gray-500 text-sm">
-                            Tags: <span className="font-semibold text-(--accent-colour)">Community</span>, <span className="font-semibold text-(--accent-colour)">School Life</span>
+                            Tagi: <span className="font-semibold text-(--accent-colour)">Społeczność</span>, <span className="font-semibold text-(--accent-colour)">Życie Szkoły</span>
                         </div>
                         <button className="flex items-center gap-2 px-6 py-3 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold transition-all">
-                            <Share2 size={18} /> Share Post
+                            <Share2 size={18} /> Udostępnij
                         </button>
                     </div>
                 </div>

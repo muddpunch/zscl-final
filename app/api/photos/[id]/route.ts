@@ -7,7 +7,7 @@ export async function DELETE(
 ) {
     const { id } = await params;
 
-    const success = deletePhoto(id);
+    const success = await deletePhoto(id);
 
     if (success) {
         return NextResponse.json({ message: 'Photo deleted successfully' });
@@ -25,7 +25,7 @@ export async function GET(
 ) {
     const { id } = await params;
 
-    const photo = getPhotoById(id);
+    const photo = await getPhotoById(id);
 
     if (photo) {
         return NextResponse.json({ photo });

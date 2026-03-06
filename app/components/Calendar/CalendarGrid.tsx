@@ -15,6 +15,7 @@ import {
 } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { Event, CATEGORY_COLORS } from '@/lib/events';
+import { pl } from 'date-fns/locale';
 import EventCategoryBadge from './EventCategoryBadge';
 import EventModal from './EventModal';
 
@@ -29,8 +30,8 @@ export default function CalendarGrid({ events }: CalendarGridProps) {
     // Generate calendar days
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
-    const startDate = startOfWeek(monthStart);
-    const endDate = endOfWeek(monthEnd);
+    const startDate = startOfWeek(monthStart, { weekStartsOn: 1 }); // Start on Monday for PL
+    const endDate = endOfWeek(monthEnd, { weekStartsOn: 1 });
 
     const days = eachDayOfInterval({
         start: startDate,
@@ -45,18 +46,18 @@ export default function CalendarGrid({ events }: CalendarGridProps) {
         return events.filter(event => isSameDay(parseISO(event.date), date));
     };
 
-    const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const weekDays = ['PON', 'WT', 'ŚR', 'CZW', 'PT', 'SOB', 'NDZ'];
 
     return (
         <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100 h-full">
             {/* Calendar Header */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900">
-                        {format(currentMonth, 'MMMM yyyy')}
+                    <h2 className="text-3xl font-bold text-gray-900 capitalize">
+                        {format(currentMonth, 'LLLL yyyy', { locale: pl })}
                     </h2>
                     <p className="text-red-500 font-medium tracking-wide text-sm mt-1 uppercase">
-                        Academic Year 2025-2026
+                        Rok Szkolny 2025-2026
                     </p>
                 </div>
 
@@ -72,7 +73,7 @@ export default function CalendarGrid({ events }: CalendarGridProps) {
                             onClick={goToToday}
                             className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-gray-900"
                         >
-                            Today
+                            Dzisiaj
                         </button>
                         <button
                             onClick={nextMonth}
@@ -131,7 +132,7 @@ export default function CalendarGrid({ events }: CalendarGridProps) {
                                                 title={event.title}
                                             >
                                                 <span className="font-bold mr-1 block md:inline">
-                                                    {event.startTime ? event.startTime : 'All Day'}
+                                                    {event.startTime ? event.startTime : 'Cały dzień'}
                                                 </span>
                                                 {event.title}
                                             </button>

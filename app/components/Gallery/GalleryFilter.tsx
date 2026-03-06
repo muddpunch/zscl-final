@@ -34,7 +34,7 @@ export default function GalleryFilter({ categories, currentCategory }: GalleryFi
                         : 'bg-white text-gray-700 border border-gray-200 hover:border-(--accent-colour) hover:text-(--accent-colour)'
                         }`}
                 >
-                    {category}
+                    {category === 'All Photos' ? 'Wszystkie zdjęcia' : category}
                 </button>
             ))}
         </div>

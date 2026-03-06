@@ -3,75 +3,110 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function main() {
+    // ─── Posts ────────────────────────────────────────────────────────────
     const posts = [
         {
-            title: "Welcome to the new school year!",
-            slug: "welcome-school-year-2026",
-            excerpt: "As we begin the new academic year, we have many exciting events planned for the students.",
-            content: "Full content about the school year start... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            title: "Witajcie w nowym roku szkolnym!",
+            slug: "witajcie-rok-szkolny-2026",
+            excerpt: "Zaczynamy nowy rok akademicki z wieloma ekscytującymi wydarzeniami zaplanowanymi dla uczniów.",
+            content: "Pełna treść o rozpoczęciu roku szkolnego... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             image: "/images/baner.webp",
             published: true,
+            author: "Administrator",
+            category: "Ogłoszenia",
+            date: new Date("2026-09-01"),
         },
         {
-            title: "Student Council Elections Results",
-            slug: "student-council-elections-results",
-            excerpt: "The results are in! Meet your new student council representatives for this semester.",
-            content: "Full content about elections... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            title: "Wyniki wyborów do Samorządu Uczniowskiego",
+            slug: "wyniki-wyborow-samorzad",
+            excerpt: "Mamy wyniki! Poznaj swoich nowych przedstawicieli w samorządzie na ten semestr.",
+            content: "Pełna treść o wynikach wyborów... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             image: "/images/baner.webp",
             published: true,
+            author: "Komisja Wyborcza",
+            category: "Samorząd",
+            date: new Date("2026-09-15"),
         },
         {
-            title: "Upcoming Sports Day",
-            slug: "upcoming-sports-day",
-            excerpt: "Get ready for the annual sports day. Sign up for your favorite activities now.",
-            content: "Full content about sports day... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            title: "Nadchodzący Dzień Sportu",
+            slug: "nadchodzacy-dzien-sportu",
+            excerpt: "Przygotuj się na coroczny dzień sportu. Zapisz się na swoje ulubione dyscypliny już teraz.",
+            content: "Pełna treść o dniu sportu... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             image: "/images/baner.webp",
             published: true,
+            author: "Dział Sportu",
+            category: "Wydarzenia",
+            date: new Date("2026-09-20"),
         },
         {
-            title: "Charity Fundraiser Success",
-            slug: "charity-fundraiser-success",
-            excerpt: "Thanks to your generosity, we raised over 5000 PLN for the local shelter.",
-            content: "Full content about charity... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            title: "Sukces zbiórki charytatywnej",
+            slug: "sukces-zbiorki-charytatywnej",
+            excerpt: "Dzięki Waszej hojności zebraliśmy ponad 5000 PLN dla lokalnego schroniska.",
+            content: "Pełna treść o zbiórce... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             image: "/images/baner.webp",
             published: true,
+            author: "Klub Wolontariatu",
+            category: "Społeczność",
+            date: new Date("2026-10-05"),
         },
         {
-            title: "New Library Books",
-            slug: "new-library-books",
-            excerpt: "Check out the latest additions to our school library. There's something for everyone.",
-            content: "Full content about library... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            title: "Nowe książki w bibliotece",
+            slug: "nowe-ksiazki-biblioteka",
+            excerpt: "Sprawdź najnowsze pozycje w naszej szkolnej bibliotece. Każdy znajdzie coś dla siebie.",
+            content: "Pełna treść o bibliotece... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             image: "/images/baner.webp",
             published: true,
+            author: "Bibliotekarz",
+            category: "Nauka",
+            date: new Date("2026-10-12"),
         },
-        {
-            title: "Science Fair Registration",
-            slug: "science-fair-registration",
-            excerpt: "Registration for the annual science fair is now open. Show off your projects!",
-            content: "Full content about science fair... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            image: "/images/baner.webp",
-            published: true,
-        },
-        {
-            title: "Holiday Break Schedule",
-            slug: "holiday-break-schedule",
-            excerpt: "Important dates for the upcoming holiday break. Make sure to check the schedule.",
-            content: "Full content about holidays... Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            image: "/images/baner.webp",
-            published: true,
-        }
     ]
 
     for (const post of posts) {
-        const exists = await prisma.post.findUnique({
-            where: { slug: post.slug }
-        })
+        const exists = await prisma.post.findUnique({ where: { slug: post.slug } })
         if (!exists) {
-            await prisma.post.create({
-                data: post
-            })
+            await prisma.post.create({ data: post })
+            console.log(`✓ Post created: ${post.title}`)
         }
     }
+
+    // ─── Events ───────────────────────────────────────────────────────────
+    const events = [
+        { title: 'Spotkanie Samorządu',    date: '2026-03-10', startTime: '15:00', endTime: '16:30', category: 'council',   location: 'Sala Konferencyjna' },
+        { title: 'Trening Piłki Nożnej',   date: '2026-03-12', startTime: '15:30', endTime: '17:00', category: 'sports',    location: 'Boisko szkolne' },
+        { title: 'Kółko Debat',           date: '2026-03-15', startTime: '16:00', endTime: '17:30', category: 'academic',  location: 'Sala 102' },
+        { title: 'Mecz Siatkówki',        date: '2026-03-18', startTime: '18:00',                   category: 'sports',    location: 'Hala Sportowa' },
+        { title: 'Egzamin próbny z Biologii', date: '2026-03-20', startTime: '09:00', endTime: '11:00', category: 'exams',     location: 'Sala 304' },
+        { title: 'Dzień Zdjęcia do Rocznika', date: '2026-03-22', startTime: '08:00', endTime: '14:00', category: 'academic' },
+        { title: 'Konkurs Matematyczny',   date: '2026-03-25', startTime: '09:00', endTime: '12:00', category: 'exams',     location: 'Sala 201' },
+    ]
+
+    for (const event of events) {
+        const exists = await prisma.event.findFirst({ where: { title: event.title, date: event.date } })
+        if (!exists) {
+            await prisma.event.create({ data: event })
+            console.log(`✓ Event created: ${event.title}`)
+        }
+    }
+
+    // ─── Photos ───────────────────────────────────────────────────────────
+    const photos = [
+        { title: 'Bal Jesienny 2025',          imageUrl: '/images/baner.webp', category: 'Wydarzenia',   event: 'Bal Jesienny',      uploadDate: '2025-10-15', description: 'Uczniowie świętujący podczas balu jesiennego' },
+        { title: 'Tydzień Kolorów - Dzień Fryzur', imageUrl: '/images/baner.webp', category: 'Społeczność', event: 'Tydzień Kolorów',   uploadDate: '2025-09-20', description: 'Kreatywne fryzury podczas tygodnia kolorów' },
+        { title: 'Mistrzostwa w Koszykówce',   imageUrl: '/images/baner.webp', category: 'Sport',         event: 'Mecz Koszykówki',   uploadDate: '2025-11-10', description: 'Zwycięstwo w meczu mistrzowskim' },
+        { title: 'Ceremonia Zakończenia 2025', imageUrl: '/images/baner.webp', category: 'Uroczystości', event: 'Zakończenie Roku',  uploadDate: '2025-06-15', description: 'Świętujemy z naszymi absolwentami' },
+        { title: 'Spotkanie Rady Uczniów',     imageUrl: '/images/baner.webp', category: 'Samorząd',      event: 'Miesięczne Spotkanie', uploadDate: '2025-09-05', description: 'Planowanie wydarzeń szkolnych' },
+    ]
+
+    for (const photo of photos) {
+        const exists = await prisma.photo.findFirst({ where: { title: photo.title } })
+        if (!exists) {
+            await prisma.photo.create({ data: photo })
+            console.log(`✓ Photo created: ${photo.title}`)
+        }
+    }
+
+    console.log('\n✅ Database seeded successfully!')
 }
 
 main()

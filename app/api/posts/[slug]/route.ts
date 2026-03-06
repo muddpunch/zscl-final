@@ -7,7 +7,7 @@ export async function DELETE(
 ) {
     const { slug } = await params;
 
-    const success = deletePost(slug);
+    const success = await deletePost(slug);
 
     if (success) {
         return NextResponse.json({ message: 'Post deleted successfully' });

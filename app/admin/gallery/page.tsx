@@ -12,7 +12,7 @@ export default function GalleryManagement() {
     const [formData, setFormData] = useState({
         title: '',
         imageUrl: '',
-        category: 'School Life',
+        category: 'Życie Szkoły',
         event: '',
         description: ''
     });
@@ -27,20 +27,20 @@ export default function GalleryManagement() {
             const data = await res.json();
             setPhotos(data.photos || []);
         } catch (error) {
-            console.error('Failed to fetch photos', error);
+            console.error('Błąd podczas pobierania zdjęć', error);
         } finally {
             setIsLoading(false);
         }
     }
 
     async function handleDelete(id: string) {
-        if (!confirm('Are you sure you want to remove this photo?')) return;
+        if (!confirm('Czy na pewno chcesz usunąć to zdjęcie?')) return;
 
         try {
             await fetch(`/api/photos/${id}`, { method: 'DELETE' });
             setPhotos(prev => prev.filter(p => p.id !== id));
         } catch (error) {
-            alert('Failed to delete photo');
+            alert('Nie udało się usunąć zdjęcia');
         }
     }
 
@@ -59,15 +59,15 @@ export default function GalleryManagement() {
                 setFormData({
                     title: '',
                     imageUrl: '',
-                    category: 'School Life',
+                    category: 'Życie Szkoły',
                     event: '',
                     description: ''
                 });
             } else {
-                alert('Failed to upload photo');
+                alert('Nie udało się przesłać zdjęcia');
             }
         } catch (error) {
-            alert('Error uploading photo');
+            alert('Błąd podczas przesyłania zdjęcia');
         }
     }
 
@@ -75,24 +75,24 @@ export default function GalleryManagement() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Gallery Management</h1>
-                    <p className="text-gray-500">Manage photos and albums in the gallery.</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Zarządzanie Galerią</h1>
+                    <p className="text-gray-500">Zarządzaj zdjęciami i albumami w galerii.</p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
                     className="bg-[#780000] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#5a0000] transition-colors flex items-center gap-2"
                 >
                     <Plus size={20} />
-                    Add Photo
+                    Dodaj zdjęcie
                 </button>
             </div>
 
             {/* Gallery Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {isLoading ? (
-                    <div className="col-span-full py-12 text-center text-gray-500">Loading photos...</div>
+                    <div className="col-span-full py-12 text-center text-gray-500">Ładowanie zdjęć...</div>
                 ) : photos.length === 0 ? (
-                    <div className="col-span-full py-12 text-center text-gray-500">No photos found.</div>
+                    <div className="col-span-full py-12 text-center text-gray-500">Nie znaleziono zdjęć.</div>
                 ) : (
                     photos.map(photo => (
                         <div key={photo.id} className="group relative aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -128,11 +128,11 @@ export default function GalleryManagement() {
                     <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden" onClick={e => e.stopPropagation()}>
                         {/* Modal content similar to Events modal but adapted for photos */}
                         <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-xl font-bold text-gray-900">Upload Photo</h2>
+                            <h2 className="text-xl font-bold text-gray-900">Prześlij zdjęcie</h2>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Tytuł</label>
                                 <input
                                     type="text" required
                                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-[#780000] outline-none"
@@ -141,7 +141,7 @@ export default function GalleryManagement() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">URL obrazu</label>
                                 <input
                                     type="url" required
                                     placeholder="https://..."
@@ -149,23 +149,23 @@ export default function GalleryManagement() {
                                     value={formData.imageUrl}
                                     onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
                                 />
-                                <p className="text-xs text-gray-500 mt-1">For now, paste a direct image link.</p>
+                                <p className="text-xs text-gray-500 mt-1">Na razie wklej bezpośredni link do obrazu.</p>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategoria</label>
                                     <select
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none"
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value })}
                                     >
-                                        <option>School Life</option>
-                                        <option>Sports</option>
-                                        <option>Events</option>
+                                        <option>Życie Szkoły</option>
+                                        <option>Sport</option>
+                                        <option>Wydarzenia</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Event Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Nazwa wydarzenia</label>
                                     <input
                                         type="text"
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none"
@@ -175,8 +175,8 @@ export default function GalleryManagement() {
                                 </div>
                             </div>
                             <div className="pt-4 flex justify-end gap-3">
-                                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancel</button>
-                                <button type="submit" className="px-6 py-2 bg-[#780000] text-white rounded-lg hover:bg-[#5a0000]">Upload</button>
+                                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Anuluj</button>
+                                <button type="submit" className="px-6 py-2 bg-[#780000] text-white rounded-lg hover:bg-[#5a0000]">Prześlij</button>
                             </div>
                         </form>
                     </div>

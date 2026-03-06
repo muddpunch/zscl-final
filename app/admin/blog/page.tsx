@@ -12,8 +12,8 @@ export default function BlogManagement() {
         title: '',
         excerpt: '',
         content: '',
-        category: 'Announcements',
-        author: 'Admin'
+        category: 'Ogłoszenia',
+        author: 'Administrator'
     });
 
     useEffect(() => {
@@ -26,20 +26,20 @@ export default function BlogManagement() {
             const data = await res.json();
             setPosts(data.posts || []);
         } catch (error) {
-            console.error('Failed to fetch posts', error);
+            console.error('Błąd podczas pobierania postów', error);
         } finally {
             setIsLoading(false);
         }
     }
 
     async function handleDelete(slug: string) {
-        if (!confirm('Are you sure you want to delete this post?')) return;
+        if (!confirm('Czy na pewno chcesz usunąć ten post?')) return;
 
         try {
             await fetch(`/api/posts/${slug}`, { method: 'DELETE' });
             setPosts(prev => prev.filter(p => p.slug !== slug));
         } catch (error) {
-            alert('Failed to delete post');
+            alert('Nie udało się usunąć posta');
         }
     }
 
@@ -59,14 +59,14 @@ export default function BlogManagement() {
                     title: '',
                     excerpt: '',
                     content: '',
-                    category: 'Announcements',
-                    author: 'Admin'
+                    category: 'Ogłoszenia',
+                    author: 'Administrator'
                 });
             } else {
-                alert('Failed to create post');
+                alert('Nie udało się utworzyć posta');
             }
         } catch (error) {
-            alert('Error creating post');
+            alert('Błąd podczas tworzenia posta');
         }
     }
 
@@ -74,15 +74,15 @@ export default function BlogManagement() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Blog Management</h1>
-                    <p className="text-gray-500">Create and edit news posts.</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Zarządzanie Blogiem</h1>
+                    <p className="text-gray-500">Twórz i edytuj posty z aktualnościami.</p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
                     className="bg-[#780000] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#5a0000] transition-colors flex items-center gap-2"
                 >
                     <Plus size={20} />
-                    New Post
+                    Nowy Post
                 </button>
             </div>
 
@@ -90,17 +90,17 @@ export default function BlogManagement() {
                 <table className="w-full text-left">
                     <thead className="bg-gray-50 border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Post Title</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Author</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Date</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Actions</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Tytuł Posta</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Autor</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Data</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Akcje</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                         {isLoading ? (
-                            <tr><td colSpan={4} className="px-6 py-8 text-center text-gray-500">Loading posts...</td></tr>
+                            <tr><td colSpan={4} className="px-6 py-8 text-center text-gray-500">Ładowanie postów...</td></tr>
                         ) : posts.length === 0 ? (
-                            <tr><td colSpan={4} className="px-6 py-8 text-center text-gray-500">No posts found.</td></tr>
+                            <tr><td colSpan={4} className="px-6 py-8 text-center text-gray-500">Nie znaleziono żadnych postów.</td></tr>
                         ) : (
                             posts.map(post => (
                                 <tr key={post.slug} className="hover:bg-gray-50/50 transition-colors">
@@ -131,11 +131,11 @@ export default function BlogManagement() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowAddModal(false)}>
                     <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
                         <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-xl font-bold text-gray-900">Create New Post</h2>
+                            <h2 className="text-xl font-bold text-gray-900">Utwórz nowy post</h2>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Tytuł</label>
                                 <input
                                     type="text" required
                                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-[#780000] outline-none"
@@ -146,21 +146,21 @@ export default function BlogManagement() {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategoria</label>
                                     <select
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none"
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value })}
                                     >
-                                        <option>Announcements</option>
-                                        <option>Events</option>
-                                        <option>Council</option>
-                                        <option>Academic</option>
-                                        <option>Community</option>
+                                        <option>Ogłoszenia</option>
+                                        <option>Wydarzenia</option>
+                                        <option>Samorząd</option>
+                                        <option>Nauka</option>
+                                        <option>Społeczność</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Autor</label>
                                     <input
                                         type="text" required
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none"
@@ -171,7 +171,7 @@ export default function BlogManagement() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt (Short Summary)</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Krótkie podsumowanie</label>
                                 <textarea
                                     required rows={2}
                                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-[#780000] outline-none resize-none"
@@ -181,7 +181,7 @@ export default function BlogManagement() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Content</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Pełna treść</label>
                                 <textarea
                                     required rows={6}
                                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-[#780000] outline-none resize-none"
@@ -191,8 +191,8 @@ export default function BlogManagement() {
                             </div>
 
                             <div className="pt-4 flex justify-end gap-3">
-                                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Cancel</button>
-                                <button type="submit" className="px-6 py-2 bg-[#780000] text-white rounded-lg hover:bg-[#5a0000]">Publish Post</button>
+                                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">Anuluj</button>
+                                <button type="submit" className="px-6 py-2 bg-[#780000] text-white rounded-lg hover:bg-[#5a0000]">Opublikuj post</button>
                             </div>
                         </form>
                     </div>

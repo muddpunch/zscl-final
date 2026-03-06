@@ -37,7 +37,7 @@ export default function CategoryFilter({ categories, currentCategory }: Category
                             : 'bg-white text-gray-700 border border-gray-200 hover:border-(--accent-colour) hover:text-(--accent-colour)'
                         }`}
                 >
-                    {category}
+                    {category === 'All' ? 'Wszystkie' : category}
                 </button>
             ))}
         </div>

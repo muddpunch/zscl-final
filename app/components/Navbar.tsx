@@ -11,15 +11,15 @@ export default function Navbar() {
 
     const navLinks = [
         {
-            name: "News",
+            name: "Aktualności",
             href: "/blog"
         },
         {
-            name: "Gallery",
+            name: "Galeria",
             href: "/galeria"
         },
         {
-            name: "Calendar",
+            name: "Kalendarz",
             href: "/kalendarz"
         },
     ];

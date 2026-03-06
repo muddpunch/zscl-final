@@ -15,11 +15,11 @@ export default function AdminSidebar() {
     const pathname = usePathname();
 
     const navItems = [
-        { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-        { name: 'Events', href: '/admin/events', icon: Calendar },
-        { name: 'Gallery', href: '/admin/gallery', icon: ImageIcon },
-        { name: 'Blog Posts', href: '/admin/blog', icon: FileText },
-        { name: 'Users', href: '/admin/users', icon: Users },
+        { name: 'Panel', href: '/admin', icon: LayoutDashboard },
+        { name: 'Wydarzenia', href: '/admin/events', icon: Calendar },
+        { name: 'Galeria', href: '/admin/gallery', icon: ImageIcon },
+        { name: 'Posty na blogu', href: '/admin/blog', icon: FileText },
+        { name: 'Użytkownicy', href: '/admin/users', icon: Users },
     ];
 
     return (
@@ -32,7 +32,7 @@ export default function AdminSidebar() {
                     </div>
                     <div className="font-bold text-xl tracking-wide">ZSCL Admin</div>
                 </div>
-                <div className="text-white/60 text-xs pl-11">Student Council</div>
+                <div className="text-white/60 text-xs pl-11">Samorząd Uczniowski</div>
             </div>
 
             {/* Navigation */}
@@ -59,11 +59,11 @@ export default function AdminSidebar() {
             <div className="p-4 border-t border-white/10 space-y-2">
                 <button className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-xl transition-colors text-left">
                     <Settings size={20} />
-                    <span>Settings</span>
+                    <span>Ustawienia</span>
                 </button>
                 <button className="w-full flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-xl transition-colors text-left">
                     <LogOut size={20} />
-                    <span>Log Out</span>
+                    <span>Wyloguj</span>
                 </button>
 
                 <div className="mt-6 flex items-center gap-3 px-4 pt-2">
@@ -72,7 +72,7 @@ export default function AdminSidebar() {
                     </div>
                     <div>
                         <div className="text-sm font-bold">Jane Doe</div>
-                        <div className="text-xs text-white/50">President</div>
+                        <div className="text-xs text-white/50">Przewodnicząca</div>
                     </div>
                 </div>
             </div>

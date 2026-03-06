@@ -40,7 +40,7 @@ export default function BlogCard({ post }: BlogCardProps) {
                     href={`/blog/${post.slug}`}
                     className="inline-flex items-center gap-2 text-(--accent-colour) font-bold hover:gap-3 transition-all mt-auto"
                 >
-                    Read Article <ArrowRight size={18} />
+                    Czytaj Artykuł <ArrowRight size={18} />
                 </Link>
             </div>
         </article>

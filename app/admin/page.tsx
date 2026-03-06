@@ -13,7 +13,7 @@ import {
 export default function AdminDashboard() {
     const stats = [
         {
-            label: 'Total Students',
+            label: 'Uczniowie',
             value: '420',
             change: '+2%',
             trend: 'up',
@@ -21,15 +21,15 @@ export default function AdminDashboard() {
             color: 'bg-blue-100 text-blue-600'
         },
         {
-            label: 'Upcoming Events',
+            label: 'Nadchodzące wydarzenia',
             value: '3',
-            change: 'This week',
+            change: 'W tym tygodniu',
             trend: 'neutral',
             icon: Calendar,
             color: 'bg-purple-100 text-purple-600'
         },
         {
-            label: 'Blog Views',
+            label: 'Wyświetlenia bloga',
             value: '1.2k',
             change: '+12%',
             trend: 'up',
@@ -39,9 +39,9 @@ export default function AdminDashboard() {
     ];
 
     const upcomingEvents = [
-        { title: 'Homecoming Dance', date: 'Fri, Sep 29', time: '7:00 PM', location: 'Main Gym', type: 'Social' },
-        { title: 'Student Council Meeting', date: 'Mon, Oct 2', time: '3:30 PM', location: 'Room 304', type: 'Academic' },
-        { title: 'Football vs. North', date: 'Fri, Oct 6', time: '6:00 PM', location: 'Stadium', type: 'Sports' },
+        { title: 'Bal Jesienny', date: 'Pt, 29 Wrz', time: '19:00', location: 'Hala Sportowa', type: 'Społeczność' },
+        { title: 'Spotkanie Samorządu', date: 'Pon, 2 Paź', time: '15:30', location: 'Sala 304', type: 'Nauka' },
+        { title: 'Mecz Piłki Nożnej', date: 'Pt, 6 Paź', time: '18:00', location: 'Stadion', type: 'Sport' },
     ];
 
     return (
@@ -49,11 +49,11 @@ export default function AdminDashboard() {
             {/* Header */}
             <div className="flex justify-between items-end">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Welcome back, Jane</h1>
-                    <p className="text-gray-500 mt-2">Here's what's happening at ZSCL today.</p>
+                    <h1 className="text-3xl font-bold text-gray-900">Witaj ponownie, Jane</h1>
+                    <p className="text-gray-500 mt-2">Oto co dzieje się dzisiaj w ZSCL.</p>
                 </div>
                 <button className="bg-[#780000] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#5a0000] transition-colors shadow-lg shadow-red-900/20">
-                    + Create New Event
+                    + Utwórz wydarzenie
                 </button>
             </div>
 
@@ -83,33 +83,33 @@ export default function AdminDashboard() {
                 {/* Event Attendance Chart Placeholder */}
                 <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-lg font-bold text-gray-900">Event Attendance</h2>
+                        <h2 className="text-lg font-bold text-gray-900">Frekwencja na wydarzeniach</h2>
                         <select className="text-sm border-gray-200 rounded-lg p-1.5 bg-gray-50 text-gray-600">
-                            <option>Last Semester</option>
-                            <option>This Year</option>
+                            <option>Ostatni semestr</option>
+                            <option>Ten rok</option>
                         </select>
                     </div>
 
                     <div className="h-64 flex items-end justify-between gap-4 px-4">
                         <div className="w-full bg-red-50 rounded-t-lg relative group h-[60%] hover:h-[65%] transition-all">
                             <div className="absolute bottom-0 w-full bg-[#780000] rounded-t-lg h-[80%] opacity-90"></div>
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Pep Rally</span>
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Wiec</span>
                         </div>
                         <div className="w-full bg-red-50 rounded-t-lg relative group h-[80%] hover:h-[85%] transition-all">
                             <div className="absolute bottom-0 w-full bg-[#780000] rounded-t-lg h-[90%] opacity-90"></div>
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Homecoming</span>
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Powrót</span>
                         </div>
                         <div className="w-full bg-red-50 rounded-t-lg relative group h-[40%] hover:h-[45%] transition-all">
                             <div className="absolute bottom-0 w-full bg-[#780000] rounded-t-lg h-[70%] opacity-90"></div>
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Debate</span>
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Debata</span>
                         </div>
                         <div className="w-full bg-red-50 rounded-t-lg relative group h-[55%] hover:h-[60%] transition-all">
                             <div className="absolute bottom-0 w-full bg-[#780000] rounded-t-lg h-[85%] opacity-90"></div>
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Talent Show</span>
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Talenty</span>
                         </div>
                         <div className="w-full bg-red-50 rounded-t-lg relative group h-[70%] hover:h-[75%] transition-all">
                             <div className="absolute bottom-0 w-full bg-yellow-400 rounded-t-lg h-[95%] opacity-90"></div>
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Charity Run</span>
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 font-medium">Mecz</span>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
                 {/* Upcoming Events List */}
                 <div className="bg-[#780000] p-6 rounded-2xl shadow-sm text-white">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-lg font-bold">Upcoming Events</h2>
+                        <h2 className="text-lg font-bold">Nadchodzące wydarzenia</h2>
                         <button className="text-white/70 hover:text-white transition-colors">
                             <MoreHorizontal size={20} />
                         </button>
@@ -127,8 +127,8 @@ export default function AdminDashboard() {
                         {upcomingEvents.map((event, i) => (
                             <div key={i} className="bg-black/20 p-4 rounded-xl backdrop-blur-sm border border-white/5 hover:bg-black/30 transition-colors">
                                 <div className="flex justify-between items-start mb-2">
-                                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${event.type === 'Social' ? 'bg-purple-500/80' :
-                                        event.type === 'Sports' ? 'bg-green-500/80' : 'bg-yellow-500/80 text-black'
+                                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${event.type === 'Społeczność' ? 'bg-purple-500/80' :
+                                        event.type === 'Sport' ? 'bg-green-500/80' : 'bg-yellow-500/80 text-black'
                                         }`}>
                                         {event.type}
                                     </span>
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <button className="w-full mt-6 py-3 bg-white text-[#780000] rounded-xl font-bold hover:bg-gray-100 transition-colors">
-                        View Calendar
+                        Zobacz Kalendarz
                     </button>
                 </div>
             </div>

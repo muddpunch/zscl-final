@@ -21,7 +21,7 @@ export default function FeaturedPost({ post }: FeaturedPostProps) {
 
                     <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full md:w-2/3">
                         <span className="inline-block px-4 py-1.5 mb-4 rounded-full bg-(--button-colour) text-black font-bold text-sm tracking-wide uppercase">
-                            Featured Post
+                            Polecany Post
                         </span>
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight group-hover:text-(--button-colour) transition-colors">
                             {post.title}

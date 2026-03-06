@@ -2,6 +2,7 @@
 import { X, Clock, MapPin, Calendar } from 'lucide-react';
 import { Event, CATEGORY_COLORS } from '@/lib/events';
 import { format, parseISO } from 'date-fns';
+import { pl } from 'date-fns/locale';
 import EventCategoryBadge from './EventCategoryBadge';
 import { useEffect } from 'react';
 
@@ -50,8 +51,8 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                     <div className="flex items-start gap-4 text-gray-700">
                         <Calendar className="text-gray-400 mt-0.5 shrink-0" size={20} />
                         <div>
-                            <p className="font-semibold">Date</p>
-                            <p className="text-sm text-gray-500">{format(parseISO(event.date), 'EEEE, MMMM do, yyyy')}</p>
+                            <p className="font-semibold">Data</p>
+                            <p className="text-sm text-gray-500">{format(parseISO(event.date), 'EEEE, d MMMM yyyy', { locale: pl })}</p>
                         </div>
                     </div>
 
@@ -59,7 +60,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                         <div className="flex items-start gap-4 text-gray-700">
                             <Clock className="text-gray-400 mt-0.5 shrink-0" size={20} />
                             <div>
-                                <p className="font-semibold">Time</p>
+                                <p className="font-semibold">Czas</p>
                                 <p className="text-sm text-gray-500">
                                     {event.startTime}
                                     {event.endTime ? ` - ${event.endTime}` : ''}
@@ -72,7 +73,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                         <div className="flex items-start gap-4 text-gray-700">
                             <MapPin className="text-gray-400 mt-0.5 shrink-0" size={20} />
                             <div>
-                                <p className="font-semibold">Location</p>
+                                <p className="font-semibold">Lokalizacja</p>
                                 <p className="text-sm text-gray-500">{event.location}</p>
                             </div>
                         </div>
@@ -93,7 +94,7 @@ export default function EventModal({ event, onClose }: EventModalProps) {
                         onClick={onClose}
                         className="text-sm font-semibold text-gray-500 hover:text-gray-800 transition-colors"
                     >
-                        Close Details
+                        Zamknij podgląd
                     </button>
                 </div>
             </div>

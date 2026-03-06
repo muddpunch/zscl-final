@@ -10,7 +10,10 @@ export default function EventCategoryBadge({ category, className = '' }: EventCa
 
     return (
         <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wide border ${colors.bg} ${colors.text} ${colors.border} ${className}`}>
-            {category}
+            {category === 'academic' ? 'Nauka' : 
+             category === 'sports' ? 'Sport' : 
+             category === 'council' ? 'Samorząd' : 
+             category === 'holidays' ? 'Święta' : 'Egzaminy'}
         </span>
     );
 }

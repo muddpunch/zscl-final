@@ -73,10 +73,10 @@ function GalleryContent() {
             {/* Header */}
             <div className="mb-12">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-                    Event Gallery
+                    Galeria Wydarzeń
                 </h1>
                 <p className="text-lg text-gray-600">
-                    Capturing the best moments from the 2025-2026 school year.
+                    Uchwycone najlepsze momenty z roku szkolnego 2025-2026.
                 </p>
             </div>
 
@@ -107,7 +107,7 @@ function GalleryContent() {
             {/* Empty State */}
             {!loading && photos.length === 0 && (
                 <div className="text-center py-20">
-                    <p className="text-xl text-gray-500">No photos found in this category.</p>
+                    <p className="text-xl text-gray-500">Nie znaleziono zdjęć w tej kategorii.</p>
                 </div>
             )}
 
@@ -118,7 +118,7 @@ function GalleryContent() {
                         onClick={() => setDisplayCount(prev => prev + 9)}
                         className="px-8 py-3 bg-white border-2 border-(--accent-colour) text-(--accent-colour) rounded-full font-bold hover:bg-(--accent-colour) hover:text-white transition-all shadow-sm hover:shadow-md"
                     >
-                        Load More Photos
+                        Załaduj więcej zdjęć
                     </button>
                 </div>
             )}

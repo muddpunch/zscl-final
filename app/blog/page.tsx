@@ -1,4 +1,4 @@
-import { getFeaturedPost, getPaginatedPosts, getAllCategories } from "@/lib/posts";
+import { getFeaturedPost, getPaginatedPosts, getAllCategories, Post } from "@/lib/posts";
 import FeaturedPost from "../components/Blog/FeaturedPost";
 import BlogCard from "../components/Blog/BlogCard";
 import Pagination from "../components/Blog/Pagination";
@@ -6,8 +6,8 @@ import CategoryFilter from "../components/Blog/CategoryFilter";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "ZSCL Blog - Latest News",
-    description: "Stay up to date with the latest news and events from ZSCL Student Council.",
+    title: "Aktualności ZSCL",
+    description: "Bądź na bieżąco z najnowszymi informacjami i wydarzeniami od Samorządu Uczniowskiego ZSCL.",
 };
 
 interface BlogPageProps {
@@ -22,7 +22,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
     const featuredPost = await getFeaturedPost();
     const { posts, totalPages } = await getPaginatedPosts(page, limit, category);
-    const categories = getAllCategories();
+    const categories = await getAllCategories();
 
     return (
         <main className="container mx-auto px-4 py-12">
@@ -33,14 +33,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             <CategoryFilter categories={categories} currentCategory={category} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                {posts.map((post) => (
+                {posts.map((post: Post) => (
                     <BlogCard key={post.id} post={post} />
                 ))}
             </div>
 
             {posts.length === 0 && (
                 <div className="text-center py-16">
-                    <p className="text-xl text-gray-500">No posts found in this category.</p>
+                    <p className="text-xl text-gray-500">Nie znaleziono postów w tej kategorii.</p>
                 </div>
             )}
 

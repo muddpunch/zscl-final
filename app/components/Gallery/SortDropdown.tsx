@@ -13,9 +13,9 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const sortOptions = [
-        { value: 'newest', label: 'Newest First' },
-        { value: 'oldest', label: 'Oldest First' },
-        { value: 'event', label: 'Event Name' }
+        { value: 'newest', label: 'Najnowsze' },
+        { value: 'oldest', label: 'Najstarsze' },
+        { value: 'event', label: 'Nazwa wydarzenia' }
     ];
 
     const handleSortChange = (sortValue: string) => {
@@ -27,7 +27,7 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
         setIsOpen(false);
     };
 
-    const currentLabel = sortOptions.find(opt => opt.value === currentSort)?.label || 'Newest First';
+    const currentLabel = sortOptions.find(opt => opt.value === currentSort)?.label || 'Najnowsze';
 
     return (
         <div className="relative">
@@ -35,7 +35,7 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg hover:border-(--accent-colour) transition-colors font-medium text-gray-700"
             >
-                <span className="text-sm">Sort by: {currentLabel}</span>
+                <span className="text-sm">Sortuj według: {currentLabel}</span>
                 <ChevronDown size={18} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 

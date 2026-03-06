@@ -1,7 +1,7 @@
 'use client'
 import CalendarGrid from '../components/Calendar/CalendarGrid';
 import UpcomingSidebar from '../components/Calendar/UpcomingSidebar';
-import { events, getUpcomingEvents } from '@/lib/events';
+import { getUpcomingEvents } from '@/lib/events';
 import { useState, useEffect } from 'react';
 import { Event } from '@/lib/events';
 import { Loader2 } from 'lucide-react';
@@ -15,13 +15,23 @@ export default function CalendarPage() {
         async function fetchEvents() {
             setLoading(true);
             try {
-                // In a real app we'd fetch from API
-                // const response = await fetch('/api/events');
-                // const data = await response.json();
-
-                // Using mock data directly for now as per plan
-                setPageEvents(events);
-                setUpcomingEvents(getUpcomingEvents());
+                // Fetch events from API
+                const response = await fetch('/api/events');
+                const data = await response.json();
+                setPageEvents(data.events || []);
+                
+                // For upcoming sidebar, we can fetch separately or filter
+                const upcomingResponse = await fetch('/api/events'); // Or a specific upcoming API if implemented
+                const upcomingData = await upcomingResponse.json();
+                
+                // Simple filter for upcoming on client side for now to match old behavior
+                const today = new Date().toISOString().split('T')[0];
+                const filtered = (upcomingData.events || [])
+                    .filter((e: Event) => e.date >= today)
+                    .sort((a: Event, b: Event) => a.date.localeCompare(b.date))
+                    .slice(0, 5);
+                
+                setUpcomingEvents(filtered);
             } catch (error) {
                 console.error('Failed to fetch events:', error);
             } finally {
@@ -44,10 +54,10 @@ export default function CalendarPage() {
         <main className="container mx-auto px-4 py-12">
             <div className="mb-12 text-center md:text-left">
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-                    School Calendar
+                    Kalendarz Szkolny
                 </h1>
                 <p className="text-lg text-gray-600">
-                    Stay up to date with academic schedules, sports, and events.
+                    Bądź na bieżąco z planami lekcji, wydarzeniami sportowymi i szkolnymi.
                 </p>
             </div>
 
@@ -65,19 +75,19 @@ export default function CalendarPage() {
 
             <div className="mt-12 flex flex-wrap justify-center gap-4 text-sm text-gray-500">
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-yellow-400"></span> Academic
+                    <span className="w-3 h-3 rounded-full bg-yellow-400"></span> Nauka
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-green-500"></span> Sports
+                    <span className="w-3 h-3 rounded-full bg-green-500"></span> Sport
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-500"></span> Council
+                    <span className="w-3 h-3 rounded-full bg-red-500"></span> Samorząd
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-purple-500"></span> Holidays
+                    <span className="w-3 h-3 rounded-full bg-purple-500"></span> Święta
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-orange-400"></span> Exams
+                    <span className="w-3 h-3 rounded-full bg-orange-400"></span> Egzaminy
                 </div>
             </div>
         </main>

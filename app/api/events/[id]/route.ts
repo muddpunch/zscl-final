@@ -7,7 +7,7 @@ export async function DELETE(
 ) {
     const { id } = await params;
 
-    const success = deleteEvent(id);
+    const success = await deleteEvent(id);
 
     if (success) {
         return NextResponse.json({ message: 'Event deleted successfully' });

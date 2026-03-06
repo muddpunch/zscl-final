@@ -34,21 +34,21 @@ export default function EventsManagement() {
             );
             setEvents(sorted);
         } catch (error) {
-            console.error('Failed to fetch events', error);
+            console.error('Błąd podczas pobierania wydarzeń', error);
         } finally {
             setIsLoading(false);
         }
     }
 
     async function handleDelete(id: string) {
-        if (!confirm('Are you sure you want to delete this event?')) return;
+        if (!confirm('Czy na pewno chcesz usunąć to wydarzenie?')) return;
 
         try {
             await fetch(`/api/events/${id}`, { method: 'DELETE' });
             // Optimistic update
             setEvents(prev => prev.filter(e => e.id !== id));
         } catch (error) {
-            alert('Failed to delete event');
+            alert('Nie udało się usunąć wydarzenia');
         }
     }
 
@@ -74,10 +74,10 @@ export default function EventsManagement() {
                     description: ''
                 });
             } else {
-                alert('Failed to create event');
+                alert('Nie udało się utworzyć wydarzenia');
             }
         } catch (error) {
-            alert('Error creating event');
+            alert('Błąd podczas tworzenia wydarzenia');
         }
     }
 
@@ -85,15 +85,15 @@ export default function EventsManagement() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Events Management</h1>
-                    <p className="text-gray-500">Manage school calendar events and schedules.</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Zarządzanie Wydarzeniami</h1>
+                    <p className="text-gray-500">Zarządzaj kalendarzem i harmonogramem szkoły.</p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
                     className="bg-[#780000] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#5a0000] transition-colors flex items-center gap-2"
                 >
                     <Plus size={20} />
-                    Add Event
+                    Dodaj wydarzenie
                 </button>
             </div>
 
@@ -103,20 +103,20 @@ export default function EventsManagement() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                     <input
                         type="text"
-                        placeholder="Search events..."
+                        placeholder="Szukaj wydarzeń..."
                         className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#780000]/20 focus:border-[#780000]"
                     />
                 </div>
                 <div className="flex gap-2">
                     <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 font-medium">
                         <Filter size={16} />
-                        Filter
+                        Filtruj
                     </button>
                     <select className="px-4 py-2 border border-gray-200 rounded-lg outline-none bg-white text-gray-600 font-medium">
-                        <option>All Categories</option>
-                        <option>Academic</option>
-                        <option>Sports</option>
-                        <option>Holidays</option>
+                        <option>Wszystkie kategorie</option>
+                        <option>Nauka</option>
+                        <option>Sport</option>
+                        <option>Święta</option>
                     </select>
                 </div>
             </div>
@@ -126,20 +126,20 @@ export default function EventsManagement() {
                 <table className="w-full text-left">
                     <thead className="bg-gray-50 border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Event Details</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Date & Time</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Category</th>
-                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Actions</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Szczegóły</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Data i Godzina</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm">Kategoria</th>
+                            <th className="px-6 py-4 font-semibold text-gray-700 text-sm text-right">Akcje</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                         {isLoading ? (
                             <tr>
-                                <td colSpan={4} className="px-6 py-8 text-center text-gray-500">Loading events...</td>
+                                <td colSpan={4} className="px-6 py-8 text-center text-gray-500">Ładowanie wydarzeń...</td>
                             </tr>
                         ) : events.length === 0 ? (
                             <tr>
-                                <td colSpan={4} className="px-6 py-8 text-center text-gray-500">No events found.</td>
+                                <td colSpan={4} className="px-6 py-8 text-center text-gray-500">Nie znaleziono żadnych wydarzeń.</td>
                             </tr>
                         ) : (
                             events.map(event => (
@@ -171,7 +171,7 @@ export default function EventsManagement() {
                                         <button
                                             onClick={() => handleDelete(event.id)}
                                             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                            title="Delete Event"
+                                            title="Usuń wydarzenie"
                                         >
                                             <Trash2 size={18} />
                                         </button>
@@ -187,11 +187,11 @@ export default function EventsManagement() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" onClick={() => setShowAddModal(false)}>
                     <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden" onClick={e => e.stopPropagation()}>
                         <div className="p-6 border-b border-gray-100">
-                            <h2 className="text-xl font-bold text-gray-900">Add New Event</h2>
+                            <h2 className="text-xl font-bold text-gray-900">Dodaj nowe wydarzenie</h2>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Event Title</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Tytuł wydarzenia</label>
                                 <input
                                     type="text"
                                     required
@@ -203,7 +203,7 @@ export default function EventsManagement() {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Data</label>
                                     <input
                                         type="date"
                                         required
@@ -213,24 +213,24 @@ export default function EventsManagement() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategoria</label>
                                     <select
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#780000]/20 focus:border-[#780000] outline-none"
                                         value={formData.category}
                                         onChange={e => setFormData({ ...formData, category: e.target.value as any })}
                                     >
-                                        <option value="academic">Academic</option>
-                                        <option value="sports">Sports</option>
-                                        <option value="council">Council</option>
-                                        <option value="holidays">Holidays</option>
-                                        <option value="exams">Exams</option>
+                                        <option value="academic">Nauka</option>
+                                        <option value="sports">Sport</option>
+                                        <option value="council">Samorząd</option>
+                                        <option value="holidays">Święta</option>
+                                        <option value="exams">Egzaminy</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Godzina rozpoczęcia</label>
                                     <input
                                         type="time"
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#780000]/20 focus:border-[#780000] outline-none"
@@ -239,7 +239,7 @@ export default function EventsManagement() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Godzina zakończenia</label>
                                     <input
                                         type="time"
                                         className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#780000]/20 focus:border-[#780000] outline-none"
@@ -250,7 +250,7 @@ export default function EventsManagement() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Lokalizacja</label>
                                 <div className="relative">
                                     <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                     <input
@@ -263,7 +263,7 @@ export default function EventsManagement() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Opis</label>
                                 <textarea
                                     rows={3}
                                     className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#780000]/20 focus:border-[#780000] outline-none resize-none"
@@ -278,13 +278,13 @@ export default function EventsManagement() {
                                     onClick={() => setShowAddModal(false)}
                                     className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors"
                                 >
-                                    Cancel
+                                    Anuluj
                                 </button>
                                 <button
                                     type="submit"
                                     className="px-6 py-2 bg-[#780000] text-white font-medium rounded-lg hover:bg-[#5a0000] transition-colors"
                                 >
-                                    Create Event
+                                    Utwórz wydarzenie
                                 </button>
                             </div>
                         </form>
