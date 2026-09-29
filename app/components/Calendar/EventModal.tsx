@@ -1,6 +1,6 @@
 'use client'
 import { X, Clock, MapPin, Calendar } from 'lucide-react';
-import { Event, CATEGORY_COLORS } from '@/lib/events';
+import { CATEGORY_COLORS, type Event } from '@/lib/event-types';
 import { format, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import EventCategoryBadge from './EventCategoryBadge';

@@ -11,6 +11,14 @@ export default function Navbar() {
 
     const navLinks = [
         {
+            name: "O nas",
+            href: "/o-nas"
+        },
+        {
+            name: "Samorząd",
+            href: "/samorzad"
+        },
+        {
             name: "Aktualności",
             href: "/blog"
         },
@@ -21,6 +29,10 @@ export default function Navbar() {
         {
             name: "Kalendarz",
             href: "/kalendarz"
+        },
+        {
+            name: "Media Szkolne",
+            href: "/media-szkolne"
         },
     ];
 
@@ -47,6 +59,7 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
+                                aria-current={pathname === link.href ? "page" : undefined}
                                 className={`text-base font-medium transition-colors duration-200 ${pathname === link.href
                                     ? "text-[var(--second-text)] font-bold"
                                     : "text-gray-700 hover:text-[var(--second-text)]"
@@ -68,6 +81,9 @@ export default function Navbar() {
                         </button>
                         <button
                             onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? "Zamknij menu" : "Otwórz menu"}
+                            aria-expanded={isOpen}
+                            aria-controls="mobile-navigation"
                             className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-[var(--second-text)] focus:outline-none"
                         >
                             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -78,13 +94,14 @@ export default function Navbar() {
 
             {/* Mobile Menu Dropdown */}
             {isOpen && (
-                <div className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 font-bold h-screen">
+                <div id="mobile-navigation" className="md:hidden bg-white border-t border-gray-100 absolute w-full left-0 font-bold h-screen">
                     <div className="px-4 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center justify-center h-full gap-8">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
                                 href={link.href}
                                 onClick={() => setIsOpen(false)}
+                                aria-current={pathname === link.href ? "page" : undefined}
                                 className={`block px-3 py-2 rounded-md text-xl font-medium ${pathname === link.href
                                     ? "text-[var(--second-text)] bg-red-50"
                                     : "text-gray-700 hover:text-[var(--second-text)] hover:bg-gray-50"

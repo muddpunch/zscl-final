@@ -14,7 +14,7 @@ import {
     parseISO
 } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
-import { Event, CATEGORY_COLORS } from '@/lib/events';
+import { CATEGORY_COLORS, type Event } from '@/lib/event-types';
 import { pl } from 'date-fns/locale';
 import EventCategoryBadge from './EventCategoryBadge';
 import EventModal from './EventModal';
@@ -24,7 +24,7 @@ interface CalendarGridProps {
 }
 
 export default function CalendarGrid({ events }: CalendarGridProps) {
-    const [currentMonth, setCurrentMonth] = useState(new Date('2025-09-01')); // Setting mock date start
+    const [currentMonth, setCurrentMonth] = useState(() => new Date());
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
     // Generate calendar days
@@ -57,7 +57,7 @@ export default function CalendarGrid({ events }: CalendarGridProps) {
                         {format(currentMonth, 'LLLL yyyy', { locale: pl })}
                     </h2>
                     <p className="text-red-500 font-medium tracking-wide text-sm mt-1 uppercase">
-                        Rok Szkolny 2025-2026
+                        Wydarzenia szkolne
                     </p>
                 </div>
 

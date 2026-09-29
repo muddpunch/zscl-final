@@ -93,22 +93,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         {post.excerpt}
                     </p>
 
-                    <div className="prose prose-lg md:prose-xl max-w-none text-gray-800 leading-loose">
-                        {/* 
-                           In a real app, this would be a Markdown renderer. 
-                           For now, we just display the text content.
-                        */}
-                        {post.content.split('\n').map((paragraph: string, idx: number) => (
-                            <p key={idx} className="mb-6">{paragraph}</p>
-                        ))}
-                        <p>
-                            Wsparcie społeczności uczniowskiej jest kluczowe dla rozwoju naszej placówki. Dzięki wspólnym wysiłkom Samorządu i Dyrekcji, udaje nam się realizować coraz więcej ambitnych projektów, które realnie wpływają na komfort nauki i atmosferę w szkole.
-                        </p>
-                        <h3>Dlaczego to jest ważne?</h3>
-                        <p>
-                            Każda inicjatywa, od drobnych zmian w statucie po duże wydarzenia kulturalne, ma na celu jedno: sprawienie, by każdy uczeń czuł się w ZSCL jak u siebie. Inwestujemy w dialog i otwartość, bo wierzymy, że to podstawa nowoczesnego szkolnictwa.
-                        </p>
-                    </div>
+                    <div className="prose prose-lg md:prose-xl max-w-none text-gray-800 leading-loose" dangerouslySetInnerHTML={{ __html: post.content }} />
 
                     <div className="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
                         <div className="text-gray-500 text-sm">

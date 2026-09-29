@@ -1,9 +1,8 @@
 'use client'
 import CalendarGrid from '../components/Calendar/CalendarGrid';
 import UpcomingSidebar from '../components/Calendar/UpcomingSidebar';
-import { getUpcomingEvents } from '@/lib/events';
 import { useState, useEffect } from 'react';
-import { Event } from '@/lib/events';
+import type { Event } from '@/lib/events';
 import { Loader2 } from 'lucide-react';
 
 export default function CalendarPage() {
@@ -16,17 +15,13 @@ export default function CalendarPage() {
             setLoading(true);
             try {
                 // Fetch events from API
-                const response = await fetch('/api/events');
+                const response = await fetch('/api/events', { cache: 'no-store' });
                 const data = await response.json();
-                setPageEvents(data.events || []);
-                
-                // For upcoming sidebar, we can fetch separately or filter
-                const upcomingResponse = await fetch('/api/events'); // Or a specific upcoming API if implemented
-                const upcomingData = await upcomingResponse.json();
-                
-                // Simple filter for upcoming on client side for now to match old behavior
-                const today = new Date().toISOString().split('T')[0];
-                const filtered = (upcomingData.events || [])
+                const allEvents = data.events || [];
+                setPageEvents(allEvents);
+
+                const today = new Date().toLocaleDateString('sv-SE');
+                const filtered = allEvents
                     .filter((e: Event) => e.date >= today)
                     .sort((a: Event, b: Event) => a.date.localeCompare(b.date))
                     .slice(0, 5);

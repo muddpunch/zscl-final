@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { posts, addPost } from '@/lib/posts';
+import { addPost, getAllPosts } from '@/lib/posts';
+import { requireAdmin } from '@/lib/admin-auth';
 
 export async function GET(request: NextRequest) {
-    return NextResponse.json({ posts });
+    const includeDrafts = request.nextUrl.searchParams.get('all') === '1';
+    if (includeDrafts) {
+        const denied = requireAdmin(request);
+        if (denied) return denied;
+    }
+    return NextResponse.json({ posts: await getAllPosts(includeDrafts) });
 }
 
 export async function POST(request: NextRequest) {
+    const denied = requireAdmin(request);
+    if (denied) return denied;
     try {
         const body = await request.json();
 
@@ -16,7 +24,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const newPost = addPost({
+        const newPost = await addPost({
             title: body.title,
             excerpt: body.excerpt,
             content: body.content,

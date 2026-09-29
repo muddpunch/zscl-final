@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { deletePhoto, getPhotoById } from '@/lib/photos';
+import { requireAdmin } from '@/lib/admin-auth';
 
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
+    const denied = requireAdmin(request);
+    if (denied) return denied;
     const { id } = await params;
 
     const success = await deletePhoto(id);

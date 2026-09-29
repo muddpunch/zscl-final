@@ -2,7 +2,7 @@
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect } from 'react';
 import Image from 'next/image';
-import { Photo } from '@/lib/photos';
+import type { Photo } from '@/lib/photos';
 
 interface LightboxProps {
     photo: Photo;

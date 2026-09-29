@@ -5,7 +5,7 @@ import PhotoCard from '../components/Gallery/PhotoCard';
 import GalleryFilter from '../components/Gallery/GalleryFilter';
 import SortDropdown from '../components/Gallery/SortDropdown';
 import Lightbox from '../components/Gallery/Lightbox';
-import { Photo } from '@/lib/photos';
+import type { Photo } from '@/lib/photos';
 import { Loader2 } from 'lucide-react';
 
 // Force dynamic rendering
@@ -97,9 +97,9 @@ function GalleryContent() {
             {!loading && displayedPhotos.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {displayedPhotos.map((photo, index) => (
-                        <div key={photo.id} onClick={() => openLightbox(index)}>
+                        <button key={photo.id} type="button" aria-label={`Powiększ zdjęcie: ${photo.title}`} onClick={() => openLightbox(index)} className="block w-full rounded-2xl text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--accent-colour)">
                             <PhotoCard photo={photo} />
-                        </div>
+                        </button>
                     ))}
                 </div>
             )}

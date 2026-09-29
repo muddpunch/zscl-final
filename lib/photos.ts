@@ -1,4 +1,5 @@
-import prisma from './prisma';
+import { randomUUID } from 'node:crypto';
+import { db } from './db';
 
 export interface Photo {
     id: string;
@@ -10,82 +11,38 @@ export interface Photo {
     description?: string;
 }
 
-function formatPhoto(p: {
-    id: string;
-    title: string;
-    imageUrl: string;
-    category: string;
-    event: string;
-    uploadDate: string;
-    description: string | null;
-    createdAt: Date;
-}): Photo {
-    return {
-        id: p.id,
-        title: p.title,
-        imageUrl: p.imageUrl,
-        category: p.category,
-        event: p.event,
-        uploadDate: p.uploadDate,
-        description: p.description ?? undefined,
-    };
-}
+interface PhotoRow extends Photo { description: string | null }
+const fromRow = (row: PhotoRow): Photo => ({ ...row, description: row.description ?? undefined });
 
-export async function getPhotos(category?: string, sortBy: string = 'newest'): Promise<Photo[]> {
-    const where = category && category !== 'All Photos'
-        ? { category }
-        : {};
-
-    let orderBy: { uploadDate: 'asc' | 'desc' } | { event: 'asc' };
-    switch (sortBy) {
-        case 'oldest':
-            orderBy = { uploadDate: 'asc' };
-            break;
-        case 'event':
-            orderBy = { event: 'asc' };
-            break;
-        case 'newest':
-        default:
-            orderBy = { uploadDate: 'desc' };
-    }
-
-    const rows = await prisma.photo.findMany({ where, orderBy });
-    return rows.map(formatPhoto);
+export async function getPhotos(category?: string, sortBy = 'newest'): Promise<Photo[]> {
+    const where = category && category !== 'All Photos' ? 'WHERE category = ?' : '';
+    const order = sortBy === 'oldest' ? 'upload_date ASC' : sortBy === 'event' ? 'event ASC' : 'upload_date DESC';
+    const rows = db.prepare(`SELECT id, title, image_url AS imageUrl, category, event,
+        upload_date AS uploadDate, description FROM photos ${where} ORDER BY ${order}`)
+        .all(...(where ? [category] : [])) as PhotoRow[];
+    return rows.map(fromRow);
 }
 
 export async function getPhotoById(id: string): Promise<Photo | null> {
-    const p = await prisma.photo.findUnique({ where: { id } });
-    return p ? formatPhoto(p) : null;
+    const row = db.prepare(`SELECT id, title, image_url AS imageUrl, category, event,
+        upload_date AS uploadDate, description FROM photos WHERE id = ?`).get(id) as PhotoRow | undefined;
+    return row ? fromRow(row) : null;
 }
 
 export async function getAllCategories(): Promise<string[]> {
-    const rows = await prisma.photo.findMany({
-        select: { category: true },
-        distinct: ['category'],
-        orderBy: { category: 'asc' },
-    });
-    return ['All Photos', ...rows.map((r: { category: string }) => r.category)];
+    const rows = db.prepare('SELECT DISTINCT category FROM photos ORDER BY category').all() as { category: string }[];
+    return ['All Photos', ...rows.map(row => row.category)];
 }
 
 export async function addPhoto(photo: Omit<Photo, 'id'>): Promise<Photo> {
-    const p = await prisma.photo.create({
-        data: {
-            title: photo.title,
-            imageUrl: photo.imageUrl,
-            category: photo.category,
-            event: photo.event,
-            uploadDate: photo.uploadDate,
-            description: photo.description ?? null,
-        },
-    });
-    return formatPhoto(p);
+    const result: Photo = { ...photo, id: randomUUID() };
+    db.prepare(`INSERT INTO photos (id, title, image_url, category, event, upload_date, description)
+        VALUES (?, ?, ?, ?, ?, ?, ?)`)
+        .run(result.id, result.title, result.imageUrl, result.category, result.event,
+            result.uploadDate || new Date().toISOString().slice(0, 10), result.description ?? null);
+    return result;
 }
 
 export async function deletePhoto(id: string): Promise<boolean> {
-    try {
-        await prisma.photo.delete({ where: { id } });
-        return true;
-    } catch {
-        return false;
-    }
+    return db.prepare('DELETE FROM photos WHERE id = ?').run(id).changes > 0;
 }

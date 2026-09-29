@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
-import { Post } from '@/lib/posts';
+import type { Post } from '@/lib/posts';
 
 interface BlogCardProps {
     post: Post;

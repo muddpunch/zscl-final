@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, User } from 'lucide-react';
-import { Post } from '@/lib/posts';
+import type { Post } from '@/lib/posts';
 
 interface FeaturedPostProps {
     post: Post;

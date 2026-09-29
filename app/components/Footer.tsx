@@ -29,7 +29,7 @@ export default function Footer() {
                         <nav className="flex flex-col gap-3">
                             <Link href="/blog" className={`transition-colors ${isActive('/blog')}`}>Aktualności</Link>
                             <Link href="/galeria" className={`transition-colors ${isActive('/galeria')}`}>Galeria</Link>
-                            <Link href="/kalendarz" className={`transition-colors ${isActive('/kalendarz')}`}>Kalendarz</Link>
+                            <Link href="/media-szkolne" className={`transition-colors ${isActive('/media-szkolne')}`}>Media Szkolne</Link>
                             <Link href="/o-nas" className={`transition-colors ${isActive('/o-nas')}`}>O nas</Link>
                         </nav>
                     </div>
@@ -42,10 +42,6 @@ export default function Footer() {
                                 <Mail size={18} />
                                 <span>su@zscl.edu.pl</span>
                             </a>
-                            <div className="flex items-center gap-3">
-                                <MapPin size={18} />
-                                <span>Sala 104, Budynek Główny</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,8 +50,8 @@ export default function Footer() {
                 <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
                     <p>© 2026 Samorząd Uczniowski ZSCL. Wszelkie prawa zastrzeżone.</p>
                     <div className="flex gap-4">
-                        <Link href="#"><Globe size={20} className="hover:text-white transition-colors" /></Link>
-                        <Link href="#"><Camera size={20} className="hover:text-white transition-colors" /></Link>
+                        <Link href="https://zscl.pl/"><Globe size={20} className="hover:text-white transition-colors" /></Link>
+                        <Link href="https://www.instagram.com/zsczl/"><Camera size={20} className="hover:text-white transition-colors" /></Link>
                     </div>
                 </div>
             </div>

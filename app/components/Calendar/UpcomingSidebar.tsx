@@ -1,5 +1,5 @@
 'use client'
-import { Event } from '@/lib/events';
+import type { Event } from '@/lib/event-types';
 import { format, parseISO } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import EventCategoryBadge from './EventCategoryBadge';

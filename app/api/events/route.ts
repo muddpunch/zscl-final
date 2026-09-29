@@ -1,24 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { events, addEvent } from '@/lib/events';
+import { addEvent, getAllEvents, getEventsByMonth } from '@/lib/events';
+import { requireAdmin } from '@/lib/admin-auth';
 
 export async function GET(request: NextRequest) {
+    const headers = { 'Cache-Control': 'no-store, max-age=0' };
     const searchParams = request.nextUrl.searchParams;
     const month = searchParams.get('month');
     const year = searchParams.get('year');
 
-    let filteredEvents = [...events];
-
     if (month && year) {
-        filteredEvents = events.filter(event => {
-            const date = new Date(event.date);
-            return date.getFullYear() === parseInt(year) && date.getMonth() === parseInt(month);
-        });
+        const monthNumber = Number(month);
+        const yearNumber = Number(year);
+        if (!Number.isInteger(monthNumber) || monthNumber < 1 || monthNumber > 12 || !Number.isInteger(yearNumber)) {
+            return NextResponse.json({ error: 'Nieprawidłowy miesiąc lub rok.' }, { status: 400, headers });
+        }
+        return NextResponse.json({ events: await getEventsByMonth(yearNumber, monthNumber - 1) }, { headers });
     }
-
-    return NextResponse.json({ events: filteredEvents });
+    return NextResponse.json({ events: await getAllEvents() }, { headers });
 }
 
 export async function POST(request: NextRequest) {
+    const denied = requireAdmin(request);
+    if (denied) return denied;
     try {
         const body = await request.json();
 
@@ -30,7 +33,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const newEvent = addEvent({
+        const newEvent = await addEvent({
             title: body.title,
             date: body.date,
             category: body.category,

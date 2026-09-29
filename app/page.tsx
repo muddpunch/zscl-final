@@ -9,8 +9,11 @@ import { getUpcomingEvents, CATEGORY_COLORS } from "@/lib/events";
 import Link from "next/link";
 
 export default async function Home() {
-  const { posts: latestPosts } = await getPaginatedPosts(1, 3);
-  const upcomingEvents = await getUpcomingEvents(4);
+  // Keep the public landing page available while the local database is offline.
+  const [{ posts: latestPosts }, upcomingEvents] = await Promise.all([
+    getPaginatedPosts(1, 3).catch(() => ({ posts: [], totalPages: 0 })),
+    getUpcomingEvents(4).catch(() => []),
+  ]);
 
   return (
     <>

@@ -24,3 +24,9 @@ body {
 .buttonSecondary {
   @apply px-6 py-3 rounded-full bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all font-semibold flex items-center justify-center;
 }
+
+[contenteditable][data-placeholder]:empty::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+}

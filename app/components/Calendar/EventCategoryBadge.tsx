@@ -1,4 +1,4 @@
-import { EventCategory, CATEGORY_COLORS } from '@/lib/events';
+import { CATEGORY_COLORS, type EventCategory } from '@/lib/event-types';
 
 interface EventCategoryBadgeProps {
     category: EventCategory;
