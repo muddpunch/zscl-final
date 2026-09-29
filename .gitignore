@@ -41,7 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 # panel
-/app/admin
 /app/api/admin
 /public/images/samorzad
 /public/uploads
+/app/admin
+
